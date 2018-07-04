@@ -151,13 +151,26 @@ class ScheduleNodeMatcher {
 #undef DECL_FRIEND_TYPE_MATCH
 
 public:
-  bool isMatching(const ScheduleNodeMatcher &matcher, isl::schedule_node node);
+  static bool isMatching(const ScheduleNodeMatcher &matcher,
+                         isl::schedule_node node);
 
 private:
   isl_schedule_node_type current_;
   std::vector<ScheduleNodeMatcher> children_;
   std::function<bool(isl::schedule_node)> nodeCallback_;
 };
+
+std::function<bool(isl::schedule_node)>
+hasPreviousSibling(const ScheduleNodeMatcher &siblingMatcher);
+
+std::function<bool(isl::schedule_node)>
+hasNextSibling(const ScheduleNodeMatcher &siblingMatcher);
+
+std::function<bool(isl::schedule_node)>
+hasSibling(const ScheduleNodeMatcher &siblingMatcher);
+
+std::function<bool(isl::schedule_node)>
+hasDescendant(const ScheduleNodeMatcher &descendantMatcher);
 
 #include "matchers-inl.h"
 
